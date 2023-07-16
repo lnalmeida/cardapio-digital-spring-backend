@@ -1,0 +1,41 @@
+version: "3.7"
+services:
+  # ====================================================================================================================
+  # POSTGRES SERVER
+  # ====================================================================================================================
+  pg-docker:
+    image: postgres:14-alpine
+    container_name: dev-postgresql
+    environment:
+      POSTGRES_DB: cardapio
+      POSTGRES_PASSWORD: 1234567
+    ports:
+      - 5434:5432
+    volumes:
+      - ~/data/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - dev-network
+  # ====================================================================================================================
+  # PGADMIN
+  # ====================================================================================================================
+#  pgadmin-docker:
+#    image: dpage/pgadmin4
+#    container_name: dev-pgadmin
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: me@example.com
+#      PGADMIN_DEFAULT_PASSWORD: 1234567
+#    ports:
+#      - 5050:80
+#    volumes:
+#      - ./.data/pgadmin:/var/lib/pgadmin
+#    depends_on:
+#      - pg-docker
+#    networks:
+#      - dev-network
+#    command: sh -c "chown -R 5050:5050 /var/lib/pgadmin && exec gunicorn --bind 0.0.0.0:80 --workers 1 --threads 25 --forwarded-allow-ips * --log-level=debug --log-file=- pgAdmin4:app"
+# ======================================================================================================================
+# REDE
+# ======================================================================================================================
+networks:
+  dev-network:
+    driver: bridge
