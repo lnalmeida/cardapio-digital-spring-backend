@@ -1,12 +1,9 @@
 package com.lnalmeida.cardapio.dto;
 
+import com.lnalmeida.cardapio.entities.Category;
 import com.lnalmeida.cardapio.entities.Food;
 
 import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 public class FoodDTO {
 	
@@ -14,9 +11,10 @@ public class FoodDTO {
 	private String title;
 	private String imgUrl;
 	private double price;
-	
 	@Column(columnDefinition = "TEXT")
 	private String description;
+	public Category category;
+	
 	
 	public FoodDTO(Food entity) {
 		this.id = entity.getId();
@@ -24,6 +22,7 @@ public class FoodDTO {
 		this.imgUrl = entity.getImgUrl();
 		this.price = entity.getPrice();
 		this.description = entity.getDescription();
+		this.category = entity.getCategory();
 	}
 
 	public Long getId() {
@@ -64,6 +63,14 @@ public class FoodDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public Category Category() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 	

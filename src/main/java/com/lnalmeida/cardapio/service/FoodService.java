@@ -32,6 +32,13 @@ public class FoodService {
 			return food.map(x -> new FoodDTO(x));		 
 	}
 	
+	@Transactional(readOnly = true)
+	public List<FoodDTO> findFoodByCategoryId(Long categoryId) {
+		List<Food> foods = foodRepository.findByCategoryId(categoryId);
+			return foods.stream().map(x -> new FoodDTO(x)).collect(Collectors.toList());		 
+	}
+	
+	
 	@Transactional
 	public void createNewFood(Food food) {
 			foodRepository.save(food);

@@ -7,17 +7,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 @Table(name="food")
 @Entity(name="Foods")
-
-
 public class Food {
 	
 	@Id
@@ -28,16 +24,19 @@ public class Food {
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	private double price;
+	@ManyToOne
+	@JoinColumn(name="category_id")
+	private Category category;
 	
 	public Food() {}
 
-	public Food(Long id, String title, String imgUrl, String description, double price) {
-		super();
+	public Food(Long id, String title, String imgUrl, String description, double price, Category category) {
 		this.id = id;
 		this.title = title;
 		this.imgUrl = imgUrl;
 		this.description = description;
 		this.price = price;
+		this.category = category;
 	}
 
 	public Long getId() {
@@ -78,6 +77,14 @@ public class Food {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public Category getCategory() {
+		return category;
+	}
+	
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lnalmeida.cardapio.dto.FoodDTO;
@@ -41,12 +42,18 @@ public class FoodController {
 		return ResponseEntity.notFound().build();
 	}
 	
+	@GetMapping(value="/bycategory")
+	public List<FoodDTO> getFoodsByCategoryId(@RequestParam Long categoryId) {
+		List<FoodDTO> foodList = foodService.findFoodByCategoryId(categoryId);
+		return foodList;
+	}
+	
 
 	@PostMapping
 	public ResponseEntity<String> postNewFood(@RequestBody Food body) {
 		try {
 			foodService.createNewFood(body);
-			return ResponseEntity.ok("Registes created successfully");
+			return ResponseEntity.ok("Register created successfully");
 		} catch (Exception e) {
 			return (ResponseEntity<String>) ResponseEntity
 					.internalServerError()
