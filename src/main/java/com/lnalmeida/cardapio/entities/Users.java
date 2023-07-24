@@ -1,4 +1,4 @@
-package com.lnalmeida.cardapio.users;
+package com.lnalmeida.cardapio.entities;
 
 import java.util.Collection;
 import java.util.List;
@@ -7,6 +7,8 @@ import java.util.Objects;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.lnalmeida.cardapio.users.UserRole;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import jakarta.persistence.Table;
 @Entity(name="Users")
 public class Users  implements UserDetails{
 	
+	private static final long serialVersionUID = -5156803934968754599L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -31,6 +34,12 @@ public class Users  implements UserDetails{
 		this.id = id;
 		this.username = username;
 		this.password = password;
+		this.role = role;
+	}
+
+	public Users(String username, String encryptedPassword, UserRole role) {
+		this.username = username;
+		this.password = encryptedPassword;
 		this.role = role;
 	}
 
