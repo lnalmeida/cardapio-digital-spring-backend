@@ -54,6 +54,7 @@ public class FoodService {
 			updatedFood.setImgUrl(foodData.getImgUrl());
 			updatedFood.setPrice(foodData.getPrice());
 			updatedFood.setDescription(foodData.getDescription());
+			updatedFood.setCategory(foodData.getCategory());
 			
 			Food savedFood = foodRepository.save(updatedFood);
 			return Optional.of(new FoodDTO(savedFood));

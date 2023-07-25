@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lnalmeida.cardapio.dto.UsersDTO;
 import com.lnalmeida.cardapio.entities.Users;
 import com.lnalmeida.cardapio.repository.UserRepository;
 

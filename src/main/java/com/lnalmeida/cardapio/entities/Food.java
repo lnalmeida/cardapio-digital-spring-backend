@@ -86,7 +86,7 @@ public class Food {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

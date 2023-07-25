@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lnalmeida.cardapio.dto.CategoryDTO;
 import com.lnalmeida.cardapio.dto.FoodDTO;
+import com.lnalmeida.cardapio.entities.Category;
 import com.lnalmeida.cardapio.entities.Food;
+import com.lnalmeida.cardapio.service.CategoryService;
 import com.lnalmeida.cardapio.service.FoodService;
 
 
@@ -26,6 +30,8 @@ public class FoodController {
 	
 	@Autowired
 	FoodService foodService;
+	@Autowired
+	CategoryService categoryService;
 		
 	@GetMapping
 	public List<FoodDTO> getAllFoods() {
@@ -51,9 +57,20 @@ public class FoodController {
 
 	@PostMapping
 	public ResponseEntity<String> postNewFood(@RequestBody Food body) {
+		Long categoryId = body.getCategory().getId();
+		
+		Optional<CategoryDTO> category = categoryService.findCategoryById(categoryId);
+		
+		if(!category.isPresent()) return ResponseEntity.badRequest().body("Category not found");
+
+		Category newCategory = new Category(categoryId);
+
+		body.setCategory(newCategory);
+			
 		try {
+			
 			foodService.createNewFood(body);
-			return ResponseEntity.ok("Register created successfully");
+			return ResponseEntity.ok("Register created successfully - "+body.getCategory().getId());
 		} catch (Exception e) {
 			return (ResponseEntity<String>) ResponseEntity
 					.internalServerError()
@@ -63,8 +80,10 @@ public class FoodController {
 	
 	@PutMapping(value="/{id}")
 	public ResponseEntity<FoodDTO> putFood(@PathVariable Long id, @RequestBody Food body) {
+		
 		Optional<FoodDTO> food = foodService.editFood(id, body);
 		if(food.isPresent()) {
+			
 			return ResponseEntity.ok(food.get());
 		}
 		return ResponseEntity.notFound().build();

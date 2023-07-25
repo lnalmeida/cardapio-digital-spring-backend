@@ -65,7 +65,7 @@ public class FoodDTO {
 		this.description = description;
 	}
 	
-	public Category Category() {
+	public Category category() {
 		return category;
 	}
 
