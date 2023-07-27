@@ -19,19 +19,19 @@ import com.lnalmeida.cardapio.entities.Category;
 import com.lnalmeida.cardapio.service.CategoryService;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("api/cardapio")
 public class CategoryController {
 
 	@Autowired
 	CategoryService categoryService;
 	
-	@GetMapping
+	@GetMapping(value="/category")
 	public List<CategoryDTO> getAllCategories() {
 		List<CategoryDTO> categories = categoryService.findAllCategories();
 		return categories;
 	}
 	
-	@GetMapping(value= "/{id}")
+	@GetMapping(value= "/category/{id}")
 	public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
 		Optional<CategoryDTO> category = categoryService.findCategoryById(id);
 		if(category.isPresent()) {
@@ -40,7 +40,7 @@ public class CategoryController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@PostMapping
+	@PostMapping(value="/category")
 	public ResponseEntity<String> postNewCategory(@RequestBody Category body) {
 		try {
 			categoryService.createNewCategory(body);
@@ -52,7 +52,7 @@ public class CategoryController {
 		}		
 	}
 	
-	@PutMapping(value="/{id}")
+	@PutMapping(value="/category/{id}")
 	public ResponseEntity<CategoryDTO> putCategory(@PathVariable Long id, @RequestBody Category body) {
 		Optional<CategoryDTO> category = categoryService.editCategory(id, body);
 		if(category.isPresent()) {
@@ -61,7 +61,7 @@ public class CategoryController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@DeleteMapping(value="/{id}")
+	@DeleteMapping(value="/category/{id}")
 	public void deleteCategory(@PathVariable Long id) {
 		categoryService.deleteCategory(id);
 	}

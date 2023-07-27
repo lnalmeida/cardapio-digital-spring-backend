@@ -24,7 +24,7 @@ import com.lnalmeida.cardapio.service.FoodService;
 
 
 @RestController
-@RequestMapping(value="/food")
+@RequestMapping(value="api/cardapio")
 public class FoodController {
 	
 	@Autowired
@@ -32,13 +32,13 @@ public class FoodController {
 	@Autowired
 	CategoryService categoryService;
 		
-	@GetMapping
+	@GetMapping(value="/food")
 	public List<FoodDTO> getAllFoods() {
 		List<FoodDTO> foodList = foodService.findAllFoods();
 		return foodList;
 	}
 	
-	@GetMapping(value= "/{id}")
+	@GetMapping(value= "/food/{id}")
 	public ResponseEntity<FoodDTO> getFoodById(@PathVariable Long id) {
 		Optional<FoodDTO> food = foodService.findFoodById(id);
 		if(food.isPresent()) {
@@ -47,14 +47,14 @@ public class FoodController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@GetMapping(value="/bycategory")
+	@GetMapping(value="/food/bycategory")
 	public List<FoodDTO> getFoodsByCategoryId(@RequestParam Long categoryId) {
 		List<FoodDTO> foodList = foodService.findFoodByCategoryId(categoryId);
 		return foodList;
 	}
 	
 
-	@PostMapping
+	@PostMapping(value="/food")
 	public ResponseEntity<String> postNewFood(@RequestBody Food body) {
 		Long categoryId = body.getCategory().getId();
 		
@@ -77,7 +77,7 @@ public class FoodController {
 		}		
 	}
 	
-	@PutMapping(value="/{id}")
+	@PutMapping(value="/food/{id}")
 	public ResponseEntity<FoodDTO> putFood(@PathVariable Long id, @RequestBody Food body) {
 		
 		Optional<FoodDTO> food = foodService.editFood(id, body);
@@ -88,7 +88,7 @@ public class FoodController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@DeleteMapping(value="/{id}")
+	@DeleteMapping(value="/food/{id}")
 	public void deleteFood(@PathVariable Long id) {
 		foodService.deleteFood(id);
 	}

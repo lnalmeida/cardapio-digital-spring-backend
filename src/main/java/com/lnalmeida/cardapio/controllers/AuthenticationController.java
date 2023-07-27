@@ -17,7 +17,7 @@ import com.lnalmeida.cardapio.service.TokenService;
 import com.lnalmeida.cardapio.service.UsersService;
 
 @RestController
-@RequestMapping(value="auth")
+@RequestMapping(value="api/cardapio/auth")
 public class AuthenticationController {
 
 	@Autowired
